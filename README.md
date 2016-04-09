@@ -39,13 +39,13 @@ LEMPDash must be run as sudo when executing processes on the system level, for i
 
 As of this version (0.0.01), you can only create or remove nginx server blocks.
 
-## cr (Create)
+### cr (Create)
 Create a thing:
 ```
 ldash cr site mysite.com
 ```
 
-## rm (Remove)
+### rm (Remove)
 Remove a thing:
 ```
 ldash rm site mysite.com
