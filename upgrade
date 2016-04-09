@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# LEMPDash Install script
+# Must be run with sudo priviliges
+
+# Variables
+
+# Check dependencies for mission critical stuff
+type zip >/dev/null 2>&1 || echo "The package 'zip' is not installed on your system, so installing..." && apt-get install zip
+
+# Make task scripts executlable
+chmod +x lempdash
+find ./tasks/ -type f -exec /bin/sh -c "file {} | grep -q executable && chmod +x {}" \;
+
+# Copy all the things into bin
+
+mkdir -p /opt/lempdash/tasks
+cp -R tasks /opt/lempdash
+cp lempdash /bin/ldash
+
