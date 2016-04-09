@@ -63,7 +63,7 @@ EOF
 
 # Creating {public,log} directories
 mkdir -p $WEB_DIR/$1/htdocs
-mkdir -p $WEB_DIR/$1/htdocs/logs
+mkdir -p $WEB_DIR/$1/logs
 touch $WEB_DIR/$1/logs/access.log
 touch $WEB_DIR/$1/logs/error.log
 

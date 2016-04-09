@@ -1,3 +1,19 @@
 #!/usr/bin/env bash
 
-echo 'you really got me'
+echo "Hi! I'm LEMPDASH"
+
+if [ $1 == "cr" ]; then
+	echo "Yeah, let's do this!"
+	if [ $# == 2 ]; then
+		echo "Creating site..." $2	
+		/opt/lempdash/tasks/nginx/createblock "$2"
+	fi
+elif [ $1 == "rm" ]; then
+	echo "Ok, grim reaper, they will be done."
+	if [ $# == 2 ]; then
+		echo "Removing site..." $2	
+		/opt/lempdash/tasks/nginx/removeblock "$2"
+	fi
+fi
+
+exit 10
