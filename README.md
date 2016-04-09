@@ -37,7 +37,7 @@ ldash
 
 LEMPDash must be run as sudo when executing processes on the system level, for instance, when creating or removing nginx server blocks.
 
-As of this version (0.0.01), you can only create or remove nginx server blocks.
+As of version (0.0.1), you can only create or remove nginx server blocks.
 
 ### cr (Create)
 Create a thing:

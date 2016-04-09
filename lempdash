@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Display colorized information output
 
-echo "Hi! I'm LEMPDash 0.0.02!"
+echo "Hi! I'm LEMPDash 0.0.2!"
 
 if [ $# -eq 0 ]; then
 	echo "Acceptable arguments: site SITENAME, db DBNAME DBUSER 'DBPASSWORD'"
