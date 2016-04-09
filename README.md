@@ -35,4 +35,20 @@ Lempdash is invoked thusly:
 ldash
 ```
 
-Other than that... it doesn't work yet.
+LEMPDash must be run as sudo when executing processes on the system level, for instance, when creating or removing nginx server blocks.
+
+As of this version (0.0.01), you can only create or remove nginx server blocks.
+
+## cr (Create)
+Create a thing:
+```
+ldash cr site mysite.com
+```
+
+## rm (Remove)
+Remove a thing:
+```
+ldash rm site mysite.com
+```
+
+Note: Remove wants to do it's thing safely, so it will back up your site files automatically using zip, and place the backup in var/www/archive/YOURSITENAME.
