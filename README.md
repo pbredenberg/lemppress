@@ -51,4 +51,12 @@ Remove a thing:
 ldash rm site mysite.com
 ```
 
-Note: Remove wants to do it's thing safely, so it will back up your site files automatically using zip, and place the backup in var/www/archive/YOURSITENAME.
+Note: Remove wants to do its' thing safely, so it will back up your site files automatically using zip, and place the backup in var/www/archive/YOURSITENAME.
+
+## Future Stuff
+
+* Create/remove MySQL databases
+* Backups for sites/DBs
+* Uninstall script
+* Setup options for system specific configurations
+
