@@ -4,7 +4,7 @@
 echo "Hi! I'm LEMPDash 0.0.2!"
 
 if [ $# -eq 0 ]; then
-	echo "Acceptable arguments: site SITENAME, db DBNAME DBUSER 'DBPASSWORD'"
+	echo "Acceptable arguments: cr, rm"
 elif [ $1 = "cr" ]; then
 	if [ -z "$2" ]; then
 			echo "Hey boss, don't forget to specify creation operation: ldash cr site"	
@@ -14,6 +14,13 @@ elif [ $1 = "cr" ]; then
 			/opt/lempdash/tasks/nginx/createblock "$3"
 		else
 			echo "Hey boss, don't forget to specify a site name: ldash cr site SITENAME"
+		fi
+	elif [ $2 = "db" ]; then	
+		if [ $# = 5 ]; then
+			echo "Creating database..." $3 	
+			/opt/lempdash/tasks/mysql/createdb "$3" "$4" "$5"
+		else
+			echo "Hey boss, don't forget to specify the database parameters: ldash cr db DBNAME DBUSER 'DBPASS"
 		fi
 	fi
 elif [ $1 = "rm" ]; then
