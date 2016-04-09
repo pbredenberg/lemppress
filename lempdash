@@ -3,16 +3,20 @@
 echo "Hi! I'm LEMPDASH"
 
 if [ $1 == "cr" ]; then
+	if [ $2 == "site" ]; then	
 	echo "Yeah, let's do this!"
-	if [ $# == 2 ]; then
-		echo "Creating site..." $2	
-		/opt/lempdash/tasks/nginx/createblock "$2"
-	fi
+		if [ $# == 3 ]; then
+			echo "Creating site..." $3	
+			/opt/lempdash/tasks/nginx/createblock "$3"
+		fi
+	fi	
 elif [ $1 == "rm" ]; then
-	echo "Ok, grim reaper, they will be done."
-	if [ $# == 2 ]; then
-		echo "Removing site..." $2	
-		/opt/lempdash/tasks/nginx/removeblock "$2"
+	echo "Ok, grim reaper, thy will be done."
+	if [ $2 == "site" ]; then
+		if [ $# == 3 ]; then	
+			echo "Removing site..." $3	
+			/opt/lempdash/tasks/nginx/removeblock "$3"
+		fi
 	fi
 fi
 
