@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Functions
+ok() { echo -e '\e[32m'$1'\e[m'; } # Green
+die() { echo -e '\e[1;31m'$1'\e[m'; exit 1; }
+
+# Variables
+NGINX_AVAILABLE_VHOSTS='/etc/nginx/sites-available'
+ARCHIVE_DIR='/var/www/archive'
+CURRENT_TIME=$(date "+%Y%m%d-%H%M%S")
+FILE_NAME="nginx_serverblock_"$CURRENT_TIME"_"$1
+
+cp $NGINX_AVAILABLE_VHOSTS/$1 $ARCHIVE_DIR/$1/$FILE_NAME
+
+ok "Server block $1 is archived at $ARCHIVE_DIR/$FILE_NAME"

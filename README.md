@@ -84,7 +84,8 @@ ldash bu db databasename
 
 ## Future Stuff
 * Uninstall script
-* Error summaries
+* Better backup/archiving managment
+* Server error summaries/reporting
 * Server event notifications
 * Setup options for system specific configurations
 * Leverage WP-CLI to manage WordPress Sites

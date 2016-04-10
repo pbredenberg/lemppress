@@ -59,6 +59,21 @@ elif [ $1 = "rm" ]; then
 	else
 		echo $ADDRESSEE$DONTF"specify a valid removal operation: ldash rm OPERATION"$AVAIL_OPS
 	fi
+# BACKUP OPERATIONS
+elif [ $1 = "bu" ]; then
+	if [ -z "$2" ]; then
+			echo $ADDRESSEE$DONTF"specify a valid backup operation: ldash bu OPERATION"$AVAIL_OPS
+	# BACK UP SITE
+	elif [ $2 = "site" ]; then
+		if [ $# = 3 ]; then	
+			echo "Backing up site: " $3	
+			/opt/lempdash/tasks/nginx/backupsite "$3"
+			echo "Backing up nginx server block for site: " $3
+			/opt/lempdash/tasks/nginx/backupblock "$3"
+		else 
+			echo $ADDRESSEE$DONTF"specify a site name: ldash bu site SITENAME"
+		fi
+	fi
 else
 	echo $HINT_TOP
 fi
