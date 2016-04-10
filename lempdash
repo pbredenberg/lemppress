@@ -1,38 +1,60 @@
 #!/usr/bin/env bash
 # Display colorized information output
+ADDRESSEE="Hey boss, "
+DONTF="don't forget to "
+AVAIL_OPS="(site, db)"
 
 echo "Hi! I'm LEMPDash 0.0.2!"
 
 if [ $# -eq 0 ]; then
 	echo "Acceptable arguments: cr, rm"
+# CREATION OPERATIONS
 elif [ $1 = "cr" ]; then
 	if [ -z "$2" ]; then
-			echo "Hey boss, don't forget to specify creation operation: ldash cr site"	
+			echo $ADDRESSEE$DONTF"specify creation operation: ldash cr OPERATION"$AVAIL_OPS	
 	elif [ $2 = "site" ]; then	
 		if [ $# = 3 ]; then
 			echo "Creating site..." $3	
 			/opt/lempdash/tasks/nginx/createblock "$3"
 		else
-			echo "Hey boss, don't forget to specify a site name: ldash cr site SITENAME"
+			echo $ADDRESSEE$DONTF"specify a site name: ldash cr site SITENAME"
 		fi
 	elif [ $2 = "db" ]; then	
 		if [ $# = 5 ]; then
 			echo "Creating database..." $3 	
 			/opt/lempdash/tasks/mysql/createdb "$3" "$4" "$5"
 		else
-			echo "Hey boss, don't forget to specify the database parameters: ldash cr db DBNAME DBUSER 'DBPASS"
+			echo $ADDRESSEE$DONTF"specify the database parameters: ldash cr db DBNAME DBUSER 'DBPASS"
 		fi
 	fi
+# REMOVAL OPERATIONS
 elif [ $1 = "rm" ]; then
 	if [ -z "$2" ]; then
-			echo "Hey boss, don't forget to specify a removal operation: ldash rm site"	
+			echo $ADDRESSEE$DONTF"specify a removal operation: ldash rm OPERATION"$AVAIL_OPS	
+	# REMOVE SITE
 	elif [ $2 = "site" ]; then
 		if [ $# = 3 ]; then	
-			echo "Removing site..." $3	
+			echo "Removing site: " $3	
 			/opt/lempdash/tasks/nginx/removeblock "$3"
 		else 
-			echo "Hey boss, don't forget to specify a site name: ldash rm site SITENAME"
+			echo $ADDRESSEE$DONTF"specify a site name: ldash rm site SITENAME"
 		fi
+	# REMOVE DATABASE
+	elif [ $2 = "db" ]; then
+		if [ $# = 3 ]; then	
+			echo "Dropping database: " $3
+			/opt/lempdash/tasks/mysql/removedb "$3"
+		else
+			echo $ADDRESSEE$DONTF"specify a database name: ldash rm db SITENAME"
+		fi
+	# REMOVE DATABASE USER
+	elif [ $2 = "dbuser" ]; then
+		if [ $# = 3 ]; then	
+			echo "Dropping user: $3" "$3"	
+			/opt/lempdash/tasks/mysql/removeuser "$3"
+		else
+			echo $ADDRESSEE$DONTF"specify a user name: ldash rm dbuser USERNAME"
+		fi	
 	fi
 fi
 

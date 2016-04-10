@@ -37,25 +37,40 @@ ldash
 
 LEMPDash must be run as sudo when executing processes on the system level, for instance, when creating or removing nginx server blocks.
 
-As of version (0.0.1), you can only create or remove nginx server blocks.
+As of version (0.0.2), you can create or remove nginx server blocks, and MySQL databses/users.
 
 ### cr (Create)
-Create a thing:
+Create a site:
 ```
 ldash cr site mysite.com
 ```
 
+Create a database:
+```
+ldash cr db databasename databaseuser databasepassword
+```
+
 ### rm (Remove)
-Remove a thing:
+Remove a site:
 ```
 ldash rm site mysite.com
+```
+
+Remove a database:
+```
+ldash rm db databasename
+```
+
+Remove a database user:
+```
+ldash rm dbuser username
 ```
 
 Note: Remove wants to do its' thing safely, so it will back up your site files automatically using zip, and place the backup in var/www/archive/YOURSITENAME.
 
 ## Future Stuff
 
-* Create/remove MySQL databases
+* Support MariaDB, MongoDB
 * Backups for sites/DBs
 * Uninstall script
 * Setup options for system specific configurations
