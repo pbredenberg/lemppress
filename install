@@ -7,8 +7,7 @@
 # Check dependencies for mission critical stuff
 type zip >/dev/null 2>&1 || echo "The package 'zip' is not installed on your system, so installing..." && apt-get install zip
 
-# Copy all the things into bin
-
+# Copy all the things into /bin and /opt
 mkdir -p /opt/lempdash/tasks
 cp -R tasks /opt/lempdash
 cp lempdash /bin/ldash
