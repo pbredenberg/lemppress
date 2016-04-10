@@ -50,7 +50,7 @@ elif [ $1 = "rm" ]; then
 	# REMOVE DATABASE USER
 	elif [ $2 = "dbuser" ]; then
 		if [ $# = 3 ]; then	
-			echo "Dropping user: $3" "$3"	
+			echo "Dropping user: " $3	
 			/opt/lempdash/tasks/mysql/removeuser "$3"
 		else
 			echo $ADDRESSEE$DONTF"specify a user name: ldash rm dbuser USERNAME"
