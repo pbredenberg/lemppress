@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# from: http://jetpackweb.com/blog/2009/07/20/bash-script-to-create-mysql-database-and-user/
+
+MYSQL=`which mysql`
+CURRENT_TIME=$(date "+%Y%m%d-%H%M%S")
+FILE_NAME=$1$CURRENT_TIME'.sql'
+ 
+Q1="DROP DATABASE IF EXISTS $1;"
+SQL="$Q1"
+ 
+echo "First I'll need your MySQL root user password to backup your database."
+read -sp 'Password: ' PASSVAR
+
+mkdir -p /var/www/archive
+mysqldump -uroot -p$PASSVAR $1 > /var/www/archive/$FILE_NAME
+
+$MYSQL -uroot -p$PASSVAR -e "$SQL"

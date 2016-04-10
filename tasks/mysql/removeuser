@@ -1,17 +1,16 @@
 #!/bin/bash
 # from: http://jetpackweb.com/blog/2009/07/20/bash-script-to-create-mysql-database-and-user/
-EXPECTED_ARGS=3
+EXPECTED_ARGS=1
 E_BADARGS=65
 MYSQL=`which mysql`
  
-Q1="CREATE DATABASE IF NOT EXISTS $1;"
-Q2="GRANT ALL ON $1.* TO '$2'@'localhost' IDENTIFIED BY '$3';"
-Q3="FLUSH PRIVILEGES;"
-SQL="${Q1}${Q2}${Q3}"
+Q1="DROP USER '$1'@'localhost';"
+Q2="FLUSH PRIVILEGES;"
+SQL="${Q1}${Q2}"
  
 if [ $# -ne $EXPECTED_ARGS ]
 then
-  echo "Usage: $0 dbname dbuser dbpass"
+  echo "Usage: $0 dbuser"
   exit $E_BADARGS
 fi
 
