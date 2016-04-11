@@ -1,5 +1,5 @@
 # LEMPDash
-Version 0.0.2
+Version 0.0.3
 
 LEMPDash is a command line tool to help streamline a [LEMP](https://lemp.io/) stack web hosting environment. Includes nginx server block and mysql database creation, backup, destruction, etc.
 
@@ -41,7 +41,7 @@ ldash
 
 LEMPDash must be run as root when executing processes on the system level, for instance, when creating or removing nginx server blocks, or when backing up to folder owned by the root user.
 
-As of version 0.0.2, you can create or remove nginx server blocks, and MySQL databses/users.
+As of version 0.0.3, you can: create, remove, or back up the following: nginx server blocks, site files, and MySQL databases with ease.
 
 ### cr (Create)
 Create a site:
@@ -70,7 +70,7 @@ Remove a database user:
 ldash rm dbuser username
 ```
 
-Note: Remove wants to do its' thing safely, so it will back up your site files automatically using zip, and place the backup in var/www/archive/YOURSITENAME.
+Note: Remove wants to do its' thing safely, so it will back up your site files and databases automatically when they are destroyed using zip, and place the backup in var/www/archive/YOURSITENAME.
 
 ### bu (Backup)
 Back up a site:
@@ -81,9 +81,10 @@ ldash bu site mysite.com
 Back up a database:
 ```
 ldash bu db databasename
+```
 
 ## Future Stuff
-* Uninstall script
+* Easily uninstall LEMPDash
 * Better backup/archiving managment
 * Server error summaries/reporting
 * Server event notifications
