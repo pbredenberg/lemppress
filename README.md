@@ -5,16 +5,16 @@ LEMPDash is a command line tool to help streamline a [LEMP](https://lemp.io/) st
 
 This tool is comprised of various shell scripts and ideas collected from around the web, arbitration given as neccessary.
 
-##System Requirements
+## System Requirements
 LEMPDash is written and tested on Ubuntu 14.04 so far, all other buyers, beware! Unless you have alot of free time.
 
-###Recommended/Required Packages:
+### Recommended/Required Packages:
 * nginx
 * mysql-server
 * php5-fpm
 * php5-mysql
 
-###Assumptions (for now)
+### Assumptions (for now)
 * Nginx is here: /etc/nginx
 * You are cool with your server root(s) being here: /var/www/YOURSITE(S)/htdocs
 
@@ -31,6 +31,15 @@ cd lempdash
 ```
 ```
 sudo ./install
+```
+
+## Upgrading
+If there is a new version with shiny new features you'd like to use, you can do that without any funny business like checking for dependencies.
+
+Assuming you still have, or have re-cloned (see Installation section) the LEMPDash repository, and have navigated into it on the command line:
+
+```
+sudo ./upgrade
 ```
 
 ## Usage
