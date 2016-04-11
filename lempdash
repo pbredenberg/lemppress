@@ -2,10 +2,10 @@
 # Display colorized information output
 ADDRESSEE="Hey boss, "
 DONTF="don't forget to "
-AVAIL_OPS="(site, db, bu)"
-HINT_TOP="Acceptable arguments: cr, rm"
+AVAIL_OPS="(site, db)"
+HINT_TOP="Acceptable arguments: cr, rm, bu"
 
-echo "Hi! I'm LEMPDash 0.0.2!"
+echo "Hi! I'm LEMPDash 0.0.3!"
 
 if [ $# -eq 0 ]; then
 	echo $HINT_TOP
