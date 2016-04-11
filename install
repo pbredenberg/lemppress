@@ -1,6 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # LEMPDash Install script
 # Must be run with sudo priviliges
+
+# Functions
+. library/functions
 
 # Variables
 
@@ -10,8 +13,9 @@ type zip >/dev/null 2>&1 || echo "The package 'zip' is not installed on your sys
 # Copy all the things into /bin and /opt
 mkdir -p /opt/lempdash/tasks
 cp -R tasks /opt/lempdash
+cp -R library /opt/lempdash
 cp lempdash /bin/ldash
 
 # Make task scripts executlable
 chmod +x /bin/ldash
-find /opt/lempdash/tasks/ -type f -exec /bin/sh -c "file {} | grep -q executable && chmod +x {}" \;
+find /opt/lempdash/ -type f -exec /bin/sh -c "file {} | grep -q executable && chmod +x {}" \;

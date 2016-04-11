@@ -1,5 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 # from: http://jetpackweb.com/blog/2009/07/20/bash-script-to-create-mysql-database-and-user/
+
+# Functions
+. /opt/lempdash/library/functions
 
 MYSQL=`which mysql`
 CURRENT_TIME=$(date "+%Y%m%d-%H%M%S")

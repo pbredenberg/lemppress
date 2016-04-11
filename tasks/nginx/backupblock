@@ -1,8 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Functions
-ok() { echo -e '\e[32m'$1'\e[m'; } # Green
-die() { echo -e '\e[1;31m'$1'\e[m'; exit 1; }
+. /opt/lempdash/library/functions
 
 # Variables
 NGINX_AVAILABLE_VHOSTS='/etc/nginx/sites-available'

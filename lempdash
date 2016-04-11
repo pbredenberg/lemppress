@@ -1,49 +1,48 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Functions
-ok() { echo -e '\e[32m'$1'\e[m'; } # Green
-die() { echo -e '\e[1;31m'$1'\e[m'; exit 1; }
+. /opt/lempdash/library/functions
 
 # Variables
-ADDRESSEE="Hey boss, "
-DONTF="don't forget to "
-AVAIL_OPS="site, db"
-HINT_TOP="Acceptable arguments: cr, rm, bu"
+addressee="Hey boss, "
+dontf="don't forget to "
+avail_ops="site, db"
+hint_top="Acceptable arguments: cr, rm, bu"
 
 ok "Hi! I'm LEMPDash 0.0.3!"
 
 if [ $# -eq 0 ]; then
-	echo "$HINT_TOP"
+	echo "$hint_top"
 # CREATION OPERATIONS
 elif [ $1 = "cr" ]; then
 	if [ -z "$2" ]; then
-			die "$ADDRESSEE$DONTF specify creation operation: ldash cr OPERATION ($AVAIL_OPS)"
+			die "$addressee$dontf specify creation operation: ldash cr OPERATION ($avail_ops)"
 	elif [ $2 = "site" ]; then	
 		if [ $# = 3 ]; then
 			ok "Creating site..." $3	
 			/opt/lempdash/tasks/nginx/createblock "$3"
 		else
-			die "$ADDRESSEE$DONTF specify a site name: ldash cr site SITENAME"
+			die "$addressee$dontf specify a site name: ldash cr site SITENAME"
 		fi
 	elif [ $2 = "db" ]; then	
 		if [ $# = 5 ]; then
 			ok "Creating database..." $3 	
 			/opt/lempdash/tasks/mysql/createdb "$3" "$4" "$5"
 		else
-			die "$ADDRESSEE$DONTF specify the database parameters: ldash cr db DBNAME DBUSER 'DBPASS'"
+			die "$addressee$dontf specify the database parameters: ldash cr db DBNAME DBUSER 'DBPASS'"
 		fi
 	fi
 # REMOVAL OPERATIONS
 elif [ $1 = "rm" ]; then
 	if [ -z "$2" ]; then
-			die "$ADDRESSEE$DONTF specify a valid removal operation: ldash rm OPERATION ($AVAIL_OPS)"	
+			die "$addressee$dontf specify a valid removal operation: ldash rm OPERATION ($avail_ops)"	
 	# REMOVE SITE
 	elif [ $2 = "site" ]; then
 		if [ $# = 3 ]; then	
 			ok "Removing site: " $3	
 			/opt/lempdash/tasks/nginx/removeblock "$3"
 		else 
-			die "$ADDRESSEE$DONTF specify a site name: ldash rm site SITENAME"
+			die "$addressee$dontf specify a site name: ldash rm site SITENAME"
 		fi
 	# REMOVE DATABASE
 	elif [ $2 = "db" ]; then
@@ -51,7 +50,7 @@ elif [ $1 = "rm" ]; then
 			ok "Dropping database: " $3
 			/opt/lempdash/tasks/mysql/removedb "$3"
 		else
-			die "$ADDRESSEE$DONTF specify a database name: ldash rm db SITENAME"
+			die "$addressee$dontf specify a database name: ldash rm db SITENAME"
 		fi
 	# REMOVE DATABASE USER
 	elif [ $2 = "dbuser" ]; then
@@ -59,15 +58,15 @@ elif [ $1 = "rm" ]; then
 			ok "Dropping user: " $3	
 			/opt/lempdash/tasks/mysql/removeuser "$3"
 		else
-			die "$ADDRESSEE$DONTF specify a user name: ldash rm dbuser USERNAME"
+			die "$addressee$dontf specify a user name: ldash rm dbuser USERNAME"
 		fi	
 	else
-		die "$ADDRESSEE$DONTF specify a valid removal operation: ldash rm OPERATION ($AVAIL_OPS, dbuser)"
+		die "$addressee$dontf specify a valid removal operation: ldash rm OPERATION ($avail_ops, dbuser)"
 	fi
 # BACKUP OPERATIONS
 elif [ $1 = "bu" ]; then
 	if [ -z "$2" ]; then
-			die "$ADDRESSEE$DONTF specify a valid backup operation: ldash bu OPERATION ($AVAIL_OPS)"
+			die "$addressee$dontf specify a valid backup operation: ldash bu OPERATION ($avail_ops)"
 	# BACK UP SITE
 	elif [ $2 = "site" ]; then
 		if [ $# = 3 ]; then	
@@ -76,18 +75,18 @@ elif [ $1 = "bu" ]; then
 			ok "Backing up nginx server block for site: " $3
 			/opt/lempdash/tasks/nginx/backupblock "$3"
 		else 
-			die "$ADDRESSEE$DONTF specify a site name: ldash bu site SITENAME"
+			die "$addressee$dontf specify a site name: ldash bu site SITENAME"
 		fi
 	elif [ $2 = "db" ]; then
 		if [ $# = 3 ]; then	
 			ok "Backing up database: " $3	
 			/opt/lempdash/tasks/mysql/backupdb "$3"		
 		else 
-			die "$ADDRESSEE$DONTF specify a database name: ldash bu db DATABASENAME"
+			die "$addressee$dontf specify a database name: ldash bu db DATABASENAME"
 		fi
 	fi
 else
-	echo "$HINT_TOP"
+	echo "$hint_top"
 fi
 
 exit 10

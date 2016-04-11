@@ -1,38 +1,33 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #
 # Nginx - delete block
 # Based on this post: http://clubmate.fi/how-to-make-an-nginx-server-block-manually-or-with-a-shell-script/
 
 # Functions
-ok() { echo -e '\e[32m'$1'\e[m'; } # Green
-die() { echo -e '\e[1;31m'$1'\e[m'; exit 1; }
+. /opt/lempdash/library/functions
 
 # Variables
-NGINX_AVAILABLE_VHOSTS='/etc/nginx/sites-available'
-NGINX_ENABLED_VHOSTS='/etc/nginx/sites-enabled'
-WEB_DIR='/var/www'
-CURRENT_TIME=$(date "+%Y%m%d-%H%M%S")
-ARCHIVE_NAME=$CURRENT_TIME'.zip'
-FILE_NAME="nginx_serverblock_"$CURRENT_TIME"_"$1
-
-# Sanity check
-[ $(id -g) != "0" ] && die "Script must be run as root."
-[ $# != "1" ] && die "Usage: $(basename $0) domainName"
+nginx_available_vhosts='/etc/nginx/sites-available'
+nginx_enabled_vhosts='/etc/nginx/sites-enabled'
+web_dir='/var/www'
+current_time=$(date '+%Y%m%d-%H%M%S')
+archive_name=$current_time'.zip'
+file_name='nginx_serverblock_'$current_time'_'$1
 
 # Zip up and backup to archive site
 echo "Archiving site $1"
-mkdir -p $WEB_DIR/archive/$1
-zip -r $WEB_DIR/archive/$1/$ARCHIVE_NAME $WEB_DIR/$1
+mkdir -p $web_dir/archive/$1
+zip -r $web_dir/archive/$1/$archive_name $web_dir/$1
 
 # Back up serverblock
-cp $NGINX_AVAILABLE_VHOSTS/$1 $WEB_DIR/archive/$1/$FILE_NAME
+cp $nginx_available_vhosts/$1 $web_dir/archive/$1/$file_name
 
 # Delete serverblock directories
-rm -rf $WEB_DIR/$1
+rm -rf $web_dir/$1
 
 # Remove site and symbolic link
-rm -f $NGINX_ENABLED_VHOSTS/$1
-rm -f $NGINX_AVAILABLE_VHOSTS/$1
+rm -f $nginx_enabled_vhosts/$1
+rm -f $nginx_available_vhosts/$1
 
 # Restart
 echo "Do you wish to restart nginx?"

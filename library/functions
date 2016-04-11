@@ -1,0 +1,5 @@
+#!/bin/bash
+
+library_path="/opt/lempdash/library"
+
+. $library_path"/"fn_echo
