@@ -2,7 +2,7 @@
 # Display colorized information output
 ADDRESSEE="Hey boss, "
 DONTF="don't forget to "
-AVAIL_OPS="(site, db)"
+AVAIL_OPS="(site, db, bu)"
 HINT_TOP="Acceptable arguments: cr, rm"
 
 echo "Hi! I'm LEMPDash 0.0.2!"
@@ -72,6 +72,13 @@ elif [ $1 = "bu" ]; then
 			/opt/lempdash/tasks/nginx/backupblock "$3"
 		else 
 			echo $ADDRESSEE$DONTF"specify a site name: ldash bu site SITENAME"
+		fi
+	elif [ $2 = "db" ]; then
+		if [ $# = 3 ]; then	
+			echo "Backing up database: " $3	
+			/opt/lempdash/tasks/mysql/backupdb "$3"		
+		else 
+			echo $ADDRESSEE$DONTF"specify a database name: ldash bu db DATABASENAME"
 		fi
 	fi
 else
