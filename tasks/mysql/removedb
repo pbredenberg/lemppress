@@ -13,7 +13,7 @@ FILE_NAME=$1$CURRENT_TIME'.sql'
 Q1="DROP DATABASE IF EXISTS $1;"
 SQL="$Q1"
  
-echo "First I'll need your MySQL root user password to backup your database."
+prompt "First I'll need your MySQL root user password to backup your database."
 read -sp 'Password: ' PASSVAR
 
 echo

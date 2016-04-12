@@ -9,7 +9,7 @@ dontf="don't forget to "
 avail_ops="site, db"
 hint_top="Acceptable arguments: cr, rm, bu"
 
-ok "Hi! I'm LEMPDash 0.0.3!"
+greet "Hi! I'm LEMPDash 0.0.3!"
 
 if [ $# -eq 0 ]; then
 	echo "$hint_top"
@@ -19,14 +19,14 @@ elif [ $1 = "cr" ]; then
 			die "$addressee$dontf specify creation operation: ldash cr OPERATION ($avail_ops)"
 	elif [ $2 = "site" ]; then	
 		if [ $# = 3 ]; then
-			ok "Creating site..." $3	
+			info "Creating site..." $3	
 			/opt/lempdash/tasks/nginx/createblock "$3"
 		else
 			die "$addressee$dontf specify a site name: ldash cr site SITENAME"
 		fi
 	elif [ $2 = "db" ]; then	
 		if [ $# = 5 ]; then
-			ok "Creating database..." $3 	
+			info "Creating database..." $3 	
 			/opt/lempdash/tasks/mysql/createdb "$3" "$4" "$5"
 		else
 			die "$addressee$dontf specify the database parameters: ldash cr db DBNAME DBUSER 'DBPASS'"
@@ -39,7 +39,7 @@ elif [ $1 = "rm" ]; then
 	# REMOVE SITE
 	elif [ $2 = "site" ]; then
 		if [ $# = 3 ]; then	
-			ok "Removing site: " $3	
+			info "Removing site: " $3	
 			/opt/lempdash/tasks/nginx/removeblock "$3"
 		else 
 			die "$addressee$dontf specify a site name: ldash rm site SITENAME"
@@ -47,7 +47,7 @@ elif [ $1 = "rm" ]; then
 	# REMOVE DATABASE
 	elif [ $2 = "db" ]; then
 		if [ $# = 3 ]; then	
-			ok "Dropping database: " $3
+			info "Dropping database: " $3
 			/opt/lempdash/tasks/mysql/removedb "$3"
 		else
 			die "$addressee$dontf specify a database name: ldash rm db SITENAME"
@@ -55,7 +55,7 @@ elif [ $1 = "rm" ]; then
 	# REMOVE DATABASE USER
 	elif [ $2 = "dbuser" ]; then
 		if [ $# = 3 ]; then	
-			ok "Dropping user: " $3	
+			info "Dropping user: " $3	
 			/opt/lempdash/tasks/mysql/removeuser "$3"
 		else
 			die "$addressee$dontf specify a user name: ldash rm dbuser USERNAME"
@@ -70,16 +70,16 @@ elif [ $1 = "bu" ]; then
 	# BACK UP SITE
 	elif [ $2 = "site" ]; then
 		if [ $# = 3 ]; then	
-			ok "Backing up site: " $3	
+			info "Backing up site: " $3	
 			/opt/lempdash/tasks/nginx/backupsite "$3"
-			ok "Backing up nginx server block for site: " $3
+			info "Backing up nginx server block for site: " $3
 			/opt/lempdash/tasks/nginx/backupblock "$3"
 		else 
 			die "$addressee$dontf specify a site name: ldash bu site SITENAME"
 		fi
 	elif [ $2 = "db" ]; then
 		if [ $# = 3 ]; then	
-			ok "Backing up database: " $3	
+			info "Backing up database: " $3	
 			/opt/lempdash/tasks/mysql/backupdb "$3"		
 		else 
 			die "$addressee$dontf specify a database name: ldash bu db DATABASENAME"

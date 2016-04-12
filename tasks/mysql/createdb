@@ -20,11 +20,11 @@ then
   exit $E_BADARGS
 fi
 
-echo "I'll need your MySQL root user password next."
+prompt "I'll need your MySQL root user password next."
 
 $MYSQL -uroot -p -e "$SQL"
 
 ok "MySQL database '$1' is created."
 ok "Assigned user '$2' with the password '$3'"
 echo
-ok "You're welcome."
+greet "You're welcome."

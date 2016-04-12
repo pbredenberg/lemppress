@@ -19,7 +19,7 @@ then
   exit $E_BADARGS
 fi
 
-echo "I'll need your MySQL root user password next."
+prompt "I'll need your MySQL root user password next."
 
 $MYSQL -uroot -p -e "$SQL"
 
