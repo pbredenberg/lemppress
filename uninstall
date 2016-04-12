@@ -1,0 +1,12 @@
+#!/bin/bash
+# LEMPDash Install script
+# Must be run with sudo priviliges
+
+# Functions
+. library/functions
+
+# Variables
+
+# Copy all the things into /bin and /opt
+rm -rf /opt/lempdash
+rm /bin/ldash
