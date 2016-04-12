@@ -22,3 +22,5 @@ fi
 echo "I'll need your MySQL root user password next."
 
 $MYSQL -uroot -p -e "$SQL"
+
+ok "MySQL user '$1' is dead, Jim."

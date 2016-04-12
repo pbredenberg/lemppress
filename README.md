@@ -15,7 +15,7 @@ LEMPDash is written and tested on Ubuntu 14.04 so far, all other buyers, beware!
 * php5-mysql
 
 ### Assumptions (for now)
-* Nginx is here: /etc/nginx
+* Nginx is located here: /etc/nginx
 * You are cool with your server root(s) being here: /var/www/YOURSITE(S)/htdocs
 
 ## Installation
