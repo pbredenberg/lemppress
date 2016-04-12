@@ -9,6 +9,8 @@ dontf="don't forget to "
 avail_ops="site, db"
 hint_top="Acceptable arguments: cr, rm, bu"
 
+cat /opt/lempdash/library/graphics/lempdash.txt
+echo
 greet "Hi! I'm LEMPDash 0.0.3!"
 
 if [ $# -eq 0 ]; then
