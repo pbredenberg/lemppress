@@ -22,7 +22,7 @@ LEMPDash is written and tested on Ubuntu 14.04 only, all other buyers, beware! U
 Get it:
 
 ```
-git clone git@github.com:pbredenberg/lempdash.git
+git clone https://github.com/pbredenberg/lempdash.git
 ```
 
 Install it:
