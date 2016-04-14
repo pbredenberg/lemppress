@@ -23,4 +23,9 @@ prompt "I'll need your MySQL root user password next."
 
 $MYSQL -uroot -p -e "$SQL"
 
-ok "MySQL user '$1' is dead, Jim."
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+	echo "You sure your password is correct?"
+else
+	ok "MySQL user '$1' is dead, Jim."
+fi

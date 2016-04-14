@@ -12,6 +12,12 @@ echo "First I'll need your MySQL root user password to back up your database."
 read -sp 'Password: ' PASSVAR
 
 mkdir -p /var/www/archive
+
 mysqldump -uroot -p$PASSVAR $1 > /var/www/archive/$FILE_NAME
 
-ok "DB $1 is archived at $WEB_DIR/archive/$FILE_NAME"
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+	echo "You sure your password is correct?"
+else
+	ok "DB $1 is archived at $WEB_DIR/archive/$FILE_NAME"
+fi

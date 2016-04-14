@@ -23,4 +23,9 @@ mysqldump -uroot -p$PASSVAR $1 > /var/www/archive/$FILE_NAME
 
 $MYSQL -uroot -p$PASSVAR -e "$SQL"
 
-ok "MySQL database '$1' is removed and archived at $WEB_DIR/archive/$FILE_NAME"
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+	echo "You sure your password is correct?"
+else
+	ok "MySQL database '$1' is removed and archived at $WEB_DIR/archive/$FILE_NAME"
+fi
