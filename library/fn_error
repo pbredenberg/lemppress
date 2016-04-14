@@ -3,4 +3,9 @@
 library_path="/opt/lempdash/library"
 
 . $library_path"/"fn_echo
-. $library_path"/"fn_error
+
+function error_exit
+{
+	die "$1" 1>&2
+	exit 1
+}

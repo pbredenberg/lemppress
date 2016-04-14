@@ -48,7 +48,15 @@ Lempdash is invoked thusly:
 ldash
 ```
 
-LEMPDash must be run as root when executing processes on the system level, for instance, when creating or removing nginx server blocks, or when backing up to folder owned by the root user.
+LEMPDash must be run as **root (sudo)** when executing processes on the system level, for instance, when creating or removing nginx server blocks, or when backing up to folder owned by the root user.
+
+On some servers, you may not need to do this depending on your particular permissions, or if you are logged in directly as root.
+
+**To be totally clear for those less experienced, you usually have to run LEMPDash like this:**
+
+```
+sudo ldash
+```
 
 As of version 0.0.3, you can: create, remove, or back up the following: nginx server blocks, site files, and MySQL databases with ease.
 
