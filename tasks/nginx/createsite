@@ -10,7 +10,6 @@
 nginx_available_vhosts='/etc/nginx/sites-available'
 nginx_enabled_vhosts='/etc/nginx/sites-enabled'
 web_dir='/var/www'
-u=$USER
 web_user='www-data'
 NGINX_SCHEME='$scheme'
 NGINX_REQUEST_URI='$request_uri'
@@ -18,6 +17,17 @@ URI='$uri'
 ARGS='$args'
 DOCUMENT_ROOT='$document_root'
 FASTCGI_SCRIPT_NAME='$fastcgi_script_name'
+
+prompt "Do you need to specify a user to own the site files?"
+
+read -r -p "[y/N] " response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+    read -r -p "Specify username: " user
+    u=$user
+else
+    u=$USER
+fi
 
 rc=$?; 
 if [[ $rc != 0 ]]; then 
@@ -90,6 +100,15 @@ EOF
 
     # Changing permissions
     chown -R $u:$web_user $web_dir/$1
+
+    rc=$?; 
+    if [[ $rc != 0 ]]; then 
+        note_perms $web_dir
+        die_nf "D) The user $u exists."
+        exit
+    else
+        ok "Permissions to site files granted to user $u"
+    fi
 
     # Enable site by creating symbolic link
     ln -s $nginx_available_vhosts/$1 $nginx_enabled_vhosts/$1
