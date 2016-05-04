@@ -100,6 +100,17 @@ Back up a database:
 ldash bu db databasename
 ```
 
+### ls (List)
+List all sites:
+```
+ldash ls site
+```
+
+List all databases:
+```
+ldash ls db
+```
+
 ## Future Stuff
 * Easily uninstall LEMPDash
 * Better backup/archiving managment

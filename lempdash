@@ -7,7 +7,7 @@
 addressee="Hey boss, "
 dontf="don't forget to "
 avail_ops="site, db"
-hint_top="Acceptable arguments: cr, rm, bu"
+hint_top="Acceptable arguments: cr, rm, bu, ls"
 
 if [ $# -eq 0 ]; then
 	cat /opt/lempdash/library/graphics/lempdash.txt
@@ -85,6 +85,16 @@ elif [ $1 = "bu" ]; then
 		else 
 			die "$addressee$dontf specify a database name: ldash bu db DATABASENAME"
 		fi
+	fi
+# LIST OPERATIONS
+elif [ $1 = "ls" ]; then
+	if [ -z "$2" ]; then
+			die "$addressee$dontf specify a valid list operation: ldash ls OPERATION ($avail_ops)"
+	# BACK UP SITE
+	elif [ $2 = "site" ]; then
+		ok "Here's all the sites I've installed:"
+	elif [ $2 = "db" ]; then
+		ok "Here's all the databases I've created:"
 	fi
 else
 	echo "$hint_top"
