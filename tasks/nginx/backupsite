@@ -13,4 +13,9 @@ echo "Archiving site $1"
 mkdir -p $WEB_DIR/archive/$1
 zip -r $WEB_DIR/archive/$1/$ARCHIVE_NAME $WEB_DIR/$1/
 
-ok "Site '$1' is archived at $WEB_DIR/archive/$1"
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+	note_perms $WEB_DIR
+else
+	ok "Site '$1' is archived at $WEB_DIR/archive/$1"
+fi

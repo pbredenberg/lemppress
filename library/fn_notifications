@@ -1,0 +1,8 @@
+#!/bin/bash
+
+function note_perms {
+	die_nf "Oh no! Read the error above, then make sure:"
+	die_nf "A) Running ldash as sudo if required."
+	die_nf "B) NGINX is installed at: /etc/nginx"
+	die_nf "C) User permissions aren't wonky at: $1"
+}

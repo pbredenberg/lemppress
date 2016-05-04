@@ -11,4 +11,9 @@ FILE_NAME="nginx_serverblock_"$CURRENT_TIME"_"$1
 
 cp $NGINX_AVAILABLE_VHOSTS/$1 $ARCHIVE_DIR/$1/$FILE_NAME
 
-ok "Server block '$1' is archived at $ARCHIVE_DIR/$1/$FILE_NAME"
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+	note_perms $ARCHIVE_DIR
+else
+	ok "Server block '$1' is archived at $ARCHIVE_DIR/$1/$FILE_NAME"
+fi

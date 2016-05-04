@@ -19,8 +19,13 @@ ARGS='$args'
 DOCUMENT_ROOT='$document_root'
 FASTCGI_SCRIPT_NAME='$fastcgi_script_name'
 
-# Create nginx config file
-cat > $nginx_available_vhosts/$1 <<EOF
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+    location="nginx install location, $web_dir. Or google it."
+    note_perms $locations
+else
+    # Create nginx config file
+    cat > $nginx_available_vhosts/$1 <<EOF
 server {
         listen 80;
         listen [::]:80;	
@@ -57,14 +62,14 @@ server {
 }
 EOF
 
-# Creating {public,log} directories
-mkdir -p $web_dir/$1/htdocs
-mkdir -p $web_dir/$1/logs
-touch $web_dir/$1/logs/access.log
-touch $web_dir/$1/logs/error.log
+    # Creating {public,log} directories
+    mkdir -p $web_dir/$1/htdocs
+    mkdir -p $web_dir/$1/logs
+    touch $web_dir/$1/logs/access.log
+    touch $web_dir/$1/logs/error.log
 
-# Creating index.html file
-cat > $web_dir/$1/htdocs/index.html <<EOF
+    # Creating index.html file
+    cat > $web_dir/$1/htdocs/index.html <<EOF
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,19 +88,21 @@ cat > $web_dir/$1/htdocs/index.html <<EOF
 </html>
 EOF
 
-# Changing permissions
-chown -R $u:$web_user $web_dir/$1
+    # Changing permissions
+    chown -R $u:$web_user $web_dir/$1
 
-# Enable site by creating symbolic link
-ln -s $nginx_available_vhosts/$1 $nginx_enabled_vhosts/$1
+    # Enable site by creating symbolic link
+    ln -s $nginx_available_vhosts/$1 $nginx_enabled_vhosts/$1
 
-# Restart
-echo "Do you wish to restart nginx?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) /etc/init.d/nginx restart ; break;;
-        No ) exit;;
-    esac
-done
+    # Restart
+    echo "Do you wish to restart nginx?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) /etc/init.d/nginx restart ; break;;
+            No ) exit;;
+        esac
+    done
 
-ok "Site Created for $1"
+    ok "Site Created for $1"
+    
+fi

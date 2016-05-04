@@ -11,6 +11,9 @@ greet() { echo -e '\e[33m'$1'\e[m'; }
 # Red - There was an error, you did something wrong. WRONG.
 die() { echo -e '\e[1;31m'$1'\e[m'; exit 1; }
 
+# Red - There was an error, but not going to kill you.
+die_nf() { echo -e '\e[1;31m'$1'\e[m'; }
+
 # Blue - Information. Here's what's hapenning.
 info() { echo -e '\e[1;34m'$1'\e[m'; }
 
