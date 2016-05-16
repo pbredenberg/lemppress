@@ -42,6 +42,13 @@ Assuming you still have, or have re-cloned (see Installation section) the LEMPDa
 sudo ./upgrade
 ```
 
+## Uninstalling
+I knew you'd hate this. Enjoy the bitter end...
+
+```
+sudo ./uninstall
+```
+
 ## Usage
 Lempdash is invoked thusly:
 ```
@@ -111,12 +118,17 @@ List all databases:
 ldash ls db
 ```
 
+List all backups:
+```
+ldash ls bu
+```
+
 ## Future Stuff
-* Easily uninstall LEMPDash
 * Better backup/archiving managment
 * Server error summaries/reporting
 * Server event notifications
 * Setup options for system specific configurations
 * Leverage WP-CLI to manage WordPress Sites
+* And some Drupal stuff
 * Support MariaDB, MongoDB
 
