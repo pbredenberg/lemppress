@@ -7,6 +7,27 @@
 
 # Variables
 
-# Copy all the things into /bin and /opt
+prompt "Do you want to remove the dependencies I installed way back when you first set me up?"
+
+read -r -p "[y/N] " response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+  apt-get autoremove --purge zip
+else
+  ok "No? Fair enough."
+fi
+
+ok "Tell my mother I love herrrrrrrhhfhgdfgsdfdf............"
+
+die_nf "...and so, LEMPdash died, leaving no offspring, no inheritance to a next of kin, and a massive collection of 'Anaconda' action figures."
+
+cat /opt/lempdash/library/graphics/theend.txt
+echo
+
+# Remove all the things from /bin and /opt
 rm -rf /opt/lempdash
 rm /bin/ldash
+
+ok "You successfully killed LEMPdash. Hope you're happy with yourself."
+
+# TODO: When some log files are added, remove those too
