@@ -92,7 +92,8 @@ elif [ $1 = "ls" ]; then
 			die "$addressee$dontf specify a valid list operation: ldash ls OPERATION ($avail_ops)"
 	# BACK UP SITE
 	elif [ $2 = "site" ]; then
-		ok "Here's all the sites I've installed:"
+		ok "Here's all the sites in /var/www:"
+		/opt/lempdash/tasks/utilities/listsite
 	elif [ $2 = "db" ]; then
 		ok "Here's all the databases I can see:"
 		/opt/lempdash/tasks/utilities/listdb

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Functions
+. /opt/lempdash/library/functions
+
+web_dir='/var/www/'
+archive_dir='/var/www/archive'
+sites_available='/etc/nginx/sites-available/'
+sites_enabled='/etc/nginx/sites-enabled/'
+
+for d in $web_dir*/ ; do
+  echo "$d"
+done
+
+ok "Here's all the sites in $sites_available:"
+
+for f in $sites_available* ; do
+  echo "$f"
+done
+
+ok "Here's all the sites in $sites_enabled:"
+
+for f in $sites_enabled* ; do
+  echo "$f"
+done
