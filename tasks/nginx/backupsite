@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Functions
+. /opt/lempdash/library/functions
+
+# Variables
+WEB_DIR='/var/www'
+CURRENT_TIME=$(date "+%Y%m%d-%H%M%S")
+ARCHIVE_NAME=$CURRENT_TIME'.zip'
+
+# Zip up and backup to archive site
+echo "Archiving site $1"
+mkdir -p $WEB_DIR/archive/$1
+zip -r $WEB_DIR/archive/$1/$ARCHIVE_NAME $WEB_DIR/$1/
+
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+	note_perms $WEB_DIR
+else
+	ok "Site '$1' is archived at $WEB_DIR/archive/$1"
+fi

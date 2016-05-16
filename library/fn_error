@@ -1,0 +1,11 @@
+#!/bin/bash
+
+library_path="/opt/lempdash/library"
+
+. $library_path"/"fn_echo
+
+function error_exit
+{
+	die "$1" 1>&2
+	exit 1
+}

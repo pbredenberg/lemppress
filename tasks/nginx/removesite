@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# Nginx - delete block
+# Based on this post: http://clubmate.fi/how-to-make-an-nginx-server-block-manually-or-with-a-shell-script/
+
+# Functions
+. /opt/lempdash/library/functions
+
+# Variables
+nginx_available_vhosts='/etc/nginx/sites-available'
+nginx_enabled_vhosts='/etc/nginx/sites-enabled'
+web_dir='/var/www'
+current_time=$(date '+%Y%m%d-%H%M%S')
+archive_name=$current_time'.zip'
+file_name='nginx_serverblock_'$current_time'_'$1
+
+# Zip up and backup to archive site
+echo "Archiving site $1"
+
+mkdir -p $web_dir/archive/$1
+
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+    note_perms $web_dir
+    exit
+fi
+
+pushd $web_dir
+	zip -r $web_dir/archive/$1/$archive_name ./$1/
+popd
+
+ok "Archive created at $web_dir/archive/$1"
+
+# Back up serverblock
+cp $nginx_available_vhosts/$1 $web_dir/archive/$1/$file_name
+
+# Delete serverblock directories
+rm -rf $web_dir/$1
+
+# Remove site and symbolic link
+rm -f $nginx_enabled_vhosts/$1
+rm -f $nginx_available_vhosts/$1
+
+# Restart
+echo "Do you wish to restart nginx?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) /etc/init.d/nginx restart ; break;;
+        No ) exit;;
+    esac
+done
+
+ok "Site Removed for $1"

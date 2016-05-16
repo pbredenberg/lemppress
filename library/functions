@@ -1,0 +1,7 @@
+#!/bin/bash
+
+library_path="/opt/lempdash/library"
+
+. $library_path"/"fn_echo
+. $library_path"/"fn_error
+. $library_path"/"fn_notifications

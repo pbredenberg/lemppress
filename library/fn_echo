@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Various colors, for various messages:
+
+# Green - Success messages, everything's ok.
+ok() { echo -e '\e[32m'$1'\e[m'; }
+
+# Yellow - Greetings, version number, informational, but somewhat useless.
+greet() { echo -e '\e[33m'$1'\e[m'; }
+
+# Red - There was an error, you did something wrong. WRONG.
+die() { echo -e '\e[1;31m'$1'\e[m'; exit; }
+
+# Red - There was an error, but not going to kill you.
+die_nf() { echo -e '\e[1;31m'$1'\e[m'; }
+
+# Blue - Information. Here's what's hapenning.
+info() { echo -e '\e[1;34m'$1'\e[m'; }
+
+# Cyan - Need you to do something right now.
+prompt() { echo -e '\e[1;36m'$1'\e[m'; }

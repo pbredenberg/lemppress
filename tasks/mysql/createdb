@@ -1,5 +1,10 @@
-#!/bin/bash
+#!/bin/bash -e
+
 # from: http://jetpackweb.com/blog/2009/07/20/bash-script-to-create-mysql-database-and-user/
+
+# Functions
+. /opt/lempdash/library/functions
+
 EXPECTED_ARGS=3
 E_BADARGS=65
 MYSQL=`which mysql`
@@ -15,6 +20,17 @@ then
   exit $E_BADARGS
 fi
 
-echo "I'll need your MySQL root user password next."
+prompt "I'll need your MySQL root user password next."
 
 $MYSQL -uroot -p -e "$SQL"
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+	echo "You sure your password is correct?"
+else
+	greet "Thanks!"
+	echo
+	ok "MySQL database '$1' is created."
+	ok "Assigned user '$2' with the password '$3'"
+	echo
+	greet "You're welcome."
+fi

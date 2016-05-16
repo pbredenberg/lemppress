@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Functions
+. /opt/lempdash/library/functions
+
+web_dir='/var/www'
+archive_dir='/var/www/archive'
+
+prompt "If you don't mind, I need your MySQL root user password."
+
+read -s -p "Enter password: " response
+
+mysql -uroot -p$response -e 'show databases;'

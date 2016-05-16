@@ -1,66 +1,108 @@
-#!/usr/bin/env bash
-# Display colorized information output
-ADDRESSEE="Hey boss, "
-DONTF="don't forget to "
-AVAIL_OPS="(site, db)"
-HINT_TOP="Acceptable arguments: cr, rm"
+#!/bin/bash -e
 
-echo "Hi! I'm LEMPDash 0.0.2!"
+# Functions
+. /opt/lempdash/library/functions
+
+# Variables
+addressee="Hey boss, "
+dontf="don't forget to "
+avail_ops="site, db"
+hint_top="Acceptable arguments: cr, rm, bu, ls"
 
 if [ $# -eq 0 ]; then
-	echo $HINT_TOP
+	cat /opt/lempdash/library/graphics/lempdash.txt
+	echo
+	greet "Hi! I'm LEMPDash 0.0.3!"
+	echo "$hint_top"
 # CREATION OPERATIONS
 elif [ $1 = "cr" ]; then
 	if [ -z "$2" ]; then
-			echo $ADDRESSEE$DONTF"specify creation operation: ldash cr OPERATION"$AVAIL_OPS	
+			die "$addressee$dontf specify creation operation: ldash cr OPERATION ($avail_ops)"
 	elif [ $2 = "site" ]; then	
 		if [ $# = 3 ]; then
-			echo "Creating site..." $3	
-			/opt/lempdash/tasks/nginx/createblock "$3"
+			info "Creating site..." $3	
+			/opt/lempdash/tasks/nginx/createsite "$3"
 		else
-			echo $ADDRESSEE$DONTF"specify a site name: ldash cr site SITENAME"
+			die "$addressee$dontf specify a site name: ldash cr site SITENAME"
 		fi
 	elif [ $2 = "db" ]; then	
 		if [ $# = 5 ]; then
-			echo "Creating database..." $3 	
+			info "Creating database..." $3 	
 			/opt/lempdash/tasks/mysql/createdb "$3" "$4" "$5"
 		else
-			echo $ADDRESSEE$DONTF"specify the database parameters: ldash cr db DBNAME DBUSER 'DBPASS"
+			die "$addressee$dontf specify the database parameters: ldash cr db DBNAME DBUSER 'DBPASS'"
 		fi
 	fi
 # REMOVAL OPERATIONS
 elif [ $1 = "rm" ]; then
 	if [ -z "$2" ]; then
-			echo $ADDRESSEE$DONTF"specify a valid removal operation: ldash rm OPERATION"$AVAIL_OPS	
+			die "$addressee$dontf specify a valid removal operation: ldash rm OPERATION ($avail_ops)"	
 	# REMOVE SITE
 	elif [ $2 = "site" ]; then
 		if [ $# = 3 ]; then	
-			echo "Removing site: " $3	
-			/opt/lempdash/tasks/nginx/removeblock "$3"
+			info "Removing site: " $3	
+			/opt/lempdash/tasks/nginx/removesite "$3"
 		else 
-			echo $ADDRESSEE$DONTF"specify a site name: ldash rm site SITENAME"
+			die "$addressee$dontf specify a site name: ldash rm site SITENAME"
 		fi
 	# REMOVE DATABASE
 	elif [ $2 = "db" ]; then
 		if [ $# = 3 ]; then	
-			echo "Dropping database: " $3
+			info "Dropping database: " $3
 			/opt/lempdash/tasks/mysql/removedb "$3"
 		else
-			echo $ADDRESSEE$DONTF"specify a database name: ldash rm db SITENAME"
+			die "$addressee$dontf specify a database name: ldash rm db SITENAME"
 		fi
 	# REMOVE DATABASE USER
 	elif [ $2 = "dbuser" ]; then
 		if [ $# = 3 ]; then	
-			echo "Dropping user: " $3	
+			info "Dropping user: " $3	
 			/opt/lempdash/tasks/mysql/removeuser "$3"
 		else
-			echo $ADDRESSEE$DONTF"specify a user name: ldash rm dbuser USERNAME"
+			die "$addressee$dontf specify a user name: ldash rm dbuser USERNAME"
 		fi	
 	else
-		echo $ADDRESSEE$DONTF"specify a valid removal operation: ldash rm OPERATION"$AVAIL_OPS
+		die "$addressee$dontf specify a valid removal operation: ldash rm OPERATION ($avail_ops, dbuser)"
+	fi
+# BACKUP OPERATIONS
+elif [ $1 = "bu" ]; then
+	if [ -z "$2" ]; then
+			die "$addressee$dontf specify a valid backup operation: ldash bu OPERATION ($avail_ops)"
+	# BACK UP SITE
+	elif [ $2 = "site" ]; then
+		if [ $# = 3 ]; then	
+			info "Backing up site: " $3	
+			/opt/lempdash/tasks/nginx/backupsite "$3"
+			info "Backing up nginx server block for site: " $3
+			/opt/lempdash/tasks/nginx/backupblock "$3"
+		else 
+			die "$addressee$dontf specify a site name: ldash bu site SITENAME"
+		fi
+	elif [ $2 = "db" ]; then
+		if [ $# = 3 ]; then	
+			info "Backing up database: " $3	
+			/opt/lempdash/tasks/mysql/backupdb "$3"		
+		else 
+			die "$addressee$dontf specify a database name: ldash bu db DATABASENAME"
+		fi
+	fi
+# LIST OPERATIONS
+elif [ $1 = "ls" ]; then
+	if [ -z "$2" ]; then
+			die "$addressee$dontf specify a valid list operation: ldash ls OPERATION ($avail_ops)"
+	# BACK UP SITE
+	elif [ $2 = "site" ]; then
+		ok "Here's all the sites in /var/www:"
+		/opt/lempdash/tasks/utilities/listsite
+	elif [ $2 = "db" ]; then
+		ok "Here's all the databases I can see:"
+		/opt/lempdash/tasks/utilities/listdb
+	elif [ $2 = "bu" ]; then
+		ok "Here's all the backup directories I can see:"
+		/opt/lempdash/tasks/utilities/listbackups
 	fi
 else
-	echo $HINT_TOP
+	echo "$hint_top"
 fi
 
 exit 10

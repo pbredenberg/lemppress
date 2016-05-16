@@ -1,0 +1,127 @@
+#!/bin/bash
+
+# Nginx - new server block
+# Based on this post: http://clubmate.fi/how-to-make-an-nginx-server-block-manually-or-with-a-shell-script/
+
+# Functions
+. /opt/lempdash/library/functions
+
+# Variables
+nginx_available_vhosts='/etc/nginx/sites-available'
+nginx_enabled_vhosts='/etc/nginx/sites-enabled'
+web_dir='/var/www'
+web_user='www-data'
+NGINX_SCHEME='$scheme'
+NGINX_REQUEST_URI='$request_uri'
+URI='$uri'
+ARGS='$args'
+DOCUMENT_ROOT='$document_root'
+FASTCGI_SCRIPT_NAME='$fastcgi_script_name'
+
+prompt "Do you need to specify a user to own the site files?"
+
+read -r -p "[y/N] " response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+    read -r -p "Specify username: " user
+    u=$user
+else
+    u=$USER
+fi
+
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+    location="nginx install location, $web_dir. Or google it."
+    note_perms $locations
+else
+    # Create nginx config file
+    cat > $nginx_available_vhosts/$1 <<EOF
+server {
+        listen 80;
+        listen [::]:80;	
+
+        root /var/www/$1/htdocs;
+        index index.php index.html index.htm;
+
+        server_name $1 www.$1;
+
+        location / {
+            try_files $URI $URI/ /index.php?q=$URI&$ARGS;
+    	}
+
+        error_page 404 /404.html;
+
+        error_page 500 502 503 504 /50x.html;
+       
+        location = /50x.html {
+            root /usr/share/nginx/html;
+        }
+
+        location ~ \.php$ {
+            try_files $URI =404;
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass unix:/var/run/php5-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $DOCUMENT_ROOT$FASTCGI_SCRIPT_NAME;
+            include fastcgi_params;
+        }
+	
+        # Logs
+        access_log $web_dir/$1/logs/access.log;
+        error_log  $web_dir/$1/logs/error.log;
+}
+EOF
+
+    # Creating {public,log} directories
+    mkdir -p $web_dir/$1/htdocs
+    mkdir -p $web_dir/$1/logs
+    touch $web_dir/$1/logs/access.log
+    touch $web_dir/$1/logs/error.log
+
+    # Creating index.html file
+    cat > $web_dir/$1/htdocs/index.html <<EOF
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>$1</title>
+    <meta charset="utf-8" />
+</head>
+<body class="container">
+    <header>
+        <h1>$1</h1>
+    </header>
+    <div id="wrapper">
+        Hello World
+    </div>
+    <footer>© $(date +%Y)</footer>
+</body>
+</html>
+EOF
+
+    # Changing permissions
+    chown -R $u:$web_user $web_dir/$1
+
+    rc=$?; 
+    if [[ $rc != 0 ]]; then 
+        note_perms $web_dir
+        die_nf "D) The user $u exists."
+        exit
+    else
+        ok "Permissions to site files granted to user $u"
+    fi
+
+    # Enable site by creating symbolic link
+    ln -s $nginx_available_vhosts/$1 $nginx_enabled_vhosts/$1
+
+    # Restart
+    echo "Do you wish to restart nginx?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) /etc/init.d/nginx restart ; break;;
+            No ) exit;;
+        esac
+    done
+
+    ok "Site Created for $1"
+    
+fi
