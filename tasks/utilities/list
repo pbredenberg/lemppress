@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Functions
+. /opt/lempdash/library/functions
+
+web_dir='/var/www'
+archive_dir='/var/www/archive'
+

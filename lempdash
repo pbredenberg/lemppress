@@ -94,7 +94,8 @@ elif [ $1 = "ls" ]; then
 	elif [ $2 = "site" ]; then
 		ok "Here's all the sites I've installed:"
 	elif [ $2 = "db" ]; then
-		ok "Here's all the databases I've created:"
+		ok "Here's all the databases I can see:"
+		/opt/lempdash/tasks/utilities/listdb
 	fi
 else
 	echo "$hint_top"
