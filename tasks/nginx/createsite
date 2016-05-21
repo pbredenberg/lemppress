@@ -91,11 +91,11 @@ server {
         # No image hotlinking
 	    location ~ .(gif|png|jpe?g)$ {
              valid_referers none blocked $1 www.$1;
-             if ($invalid_referer) {
+             if (\$invalid_referer) {
                 return   403;
             }
         }
-           
+
         # Logs
         access_log $web_dir/$1/logs/access.log;
         error_log  $web_dir/$1/logs/error.log;
