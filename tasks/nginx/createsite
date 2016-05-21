@@ -66,6 +66,10 @@ server {
             include fastcgi_params;
         }
 
+        location ~* /(?:uploads|files)/.*.php$ {
+            deny all;
+        }
+
         # Logs
         access_log $web_dir/$1/logs/access.log;
         error_log  $web_dir/$1/logs/error.log;
