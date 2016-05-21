@@ -65,6 +65,12 @@ server {
             fastcgi_param SCRIPT_FILENAME $DOCUMENT_ROOT$FASTCGI_SCRIPT_NAME;
             include fastcgi_params;
         }
+
+        # Security measure to prevent php files being accessed in the uploads
+        # directory.
+        location ~* /(?:uploads|files)/.*.php$ {
+            deny all;
+        }
 	
         # Logs
         access_log $web_dir/$1/logs/access.log;
