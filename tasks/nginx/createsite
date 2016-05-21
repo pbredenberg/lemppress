@@ -66,36 +66,6 @@ server {
             include fastcgi_params;
         }
 
-        # Security measure to prevent php files being accessed in the uploads
-        # directory.
-        location ~* /(?:uploads|files)/.*.php$ {
-            deny all;
-        }
-        
-        # Security measure to prevent unauthorized access to sensitive files.
-        location ~* .(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(.php)?|xtmpl)$|^(..*|Entries.*|Repository|Root|Tag|Template)$|.php_
-        {
-                return 444;
-        }
-
-        # Prevent malicious scripts from being executed.
-        location ~* .(pl|cgi|py|sh|lua)$ {
-                return 444;
-        }
-
-        # Prevent unauthorized access to WP functionality... *cough*SPAMMERS*cough*
-        location ~ /(.|wp-config.php|wp-comments-post.php|readme.html|license.txt) {
-            deny all;
-        }
-
-        # No image hotlinking
-	    location ~ .(gif|png|jpe?g)$ {
-             valid_referers none blocked $1 www.$1;
-             if (\$invalid_referer) {
-                return   403;
-            }
-        }
-
         # Logs
         access_log $web_dir/$1/logs/access.log;
         error_log  $web_dir/$1/logs/error.log;
