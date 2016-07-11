@@ -97,7 +97,7 @@ ldash rm db databasename
 ldash rm dbuser username
 ```
 
-**Note:** *Remove wants to do its' thing safely, so before deatroying anything, it will back up your site files and databases automatically using zip, and place the backup in var/www/archive/YOURSITENAME.*
+**Note:** *Remove wants to do its' thing safely, so before destroying anything, it will back up your site files and databases automatically using zip, and place the backup in var/www/archive/YOURSITENAME.*
 
 ### bu (Backup)
 **Back up a site:**
