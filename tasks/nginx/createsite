@@ -10,7 +10,8 @@
 nginx_available_vhosts='/etc/nginx/sites-available'
 nginx_enabled_vhosts='/etc/nginx/sites-enabled'
 web_dir='/var/www'
-web_user='www-data'
+web_user=$(ls -ld /var/www | awk '{print $3}')
+web_group=$(ls -ld /var/www | awk '{print $4}')
 NGINX_SCHEME='$scheme'
 NGINX_REQUEST_URI='$request_uri'
 URI='$uri'
@@ -18,15 +19,18 @@ ARGS='$args'
 DOCUMENT_ROOT='$document_root'
 FASTCGI_SCRIPT_NAME='$fastcgi_script_name'
 
-prompt "Do you need to specify a user to own the site files?"
+prompt "Do you need to specify a user and group to own this site's files? (default - $web_user:$web_group)"
 
 read -r -p "[y/N] " response
 if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
 then
     read -r -p "Specify username: " user
     u=$user
+    read -r -p "Specify group: " group
+    g=$group
 else
-    u=$USER
+    u=$web_user
+    g=$web_group
 fi
 
 rc=$?; 
@@ -103,7 +107,7 @@ EOF
 EOF
 
     # Changing permissions
-    chown -R $u:$web_user $web_dir/$1
+    chown -R $u:$g $web_dir/$1
 
     rc=$?; 
     if [[ $rc != 0 ]]; then 
@@ -111,7 +115,7 @@ EOF
         die_nf "D) The user $u exists."
         exit
     else
-        ok "Permissions to site files granted to user $u"
+        ok "Permissions to site files granted to user $u, group $g"
     fi
 
     # Enable site by creating symbolic link
