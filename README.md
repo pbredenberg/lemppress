@@ -1,5 +1,5 @@
 # LEMPDash
-Version 0.0.3
+Version 0.0.4
 
 LEMPDash is a command line tool to help streamline a [LEMP](https://lemp.io/) stack web hosting environment. Includes nginx server block and mysql database creation, backup, destruction, etc.
 
@@ -11,7 +11,7 @@ LEMPDash is written and tested on Ubuntu 14.04 so far, all other buyers, beware!
 ### Recommended/Required Packages:
 * nginx
 * mysql-server
-* php5-fpm
+* php5-fpmldash
 * php5-mysql
 
 ### Assumptions (for now)
@@ -68,57 +68,60 @@ sudo ldash
 As of version 0.0.3, you can: create, remove, or back up the following: nginx server blocks, site files, and MySQL databases with ease.
 
 ### cr (Create)
-Create a site:
+**Create a site:**
 ```
 ldash cr site mysite.com
 ```
+LEMPDash will ask you to specify a user and a group. This should match whomever the user is whom owns/runs your webserver. Say no to leave the defaults.
 
-Create a database:
+**Tip:** *The default for this setting is the owner of the /var/www directory. If your nginx user for all your sites is the same, make sure the desired user and group own the /var/www directory.* 
+
+**Create a database:**
 ```
 ldash cr db databasename databaseuser databasepassword
 ```
 
 ### rm (Remove)
-Remove a site:
+**Remove a site:**
 ```
 ldash rm site mysite.com
 ```
 
-Remove a database:
+**Remove a database:**
 ```
 ldash rm db databasename
 ```
 
-Remove a database user:
+**Remove a database user:**
 ```
 ldash rm dbuser username
 ```
 
-Note: Remove wants to do its' thing safely, so it will back up your site files and databases automatically when they are destroyed using zip, and place the backup in var/www/archive/YOURSITENAME.
+**Note:** *Remove wants to do its' thing safely, so before deatroying anything, it will back up your site files and databases automatically using zip, and place the backup in var/www/archive/YOURSITENAME.*
 
 ### bu (Backup)
-Back up a site:
+**Back up a site:**
 ```
 ldash bu site mysite.com
 ```
 
-Back up a database:
+**Back up a database:**
 ```
 ldash bu db databasename
 ```
 
 ### ls (List)
-List all sites:
+**List all sites:**
 ```
 ldash ls site
 ```
 
-List all databases:
+**List all databases:**
 ```
 ldash ls db
 ```
 
-List all backups:
+**List all backups:**
 ```
 ldash ls bu
 ```
