@@ -1,7 +1,7 @@
 # LEMPDash
 Version 0.0.4
 
-LEMPDash is a command line tool to help streamline a [LEMP](https://lemp.io/) stack web hosting environment. Includes nginx server block and mysql database creation, backup, destruction, etc.
+LEMPDash is a command line tool to help streamline a [LEMP](https://lemp.io/) stack web hosting environment. Includes nginx server block and mysql/mariadb database creation, backup, destruction, etc.
 
 This tool is comprised of various shell scripts and ideas collected from around the web, arbitration given as neccessary.
 
@@ -10,7 +10,7 @@ LEMPDash is written and tested on Ubuntu 14.04 so far, all other buyers, beware!
 
 ### Recommended/Required Packages:
 * nginx
-* mysql-server
+* mysql-server/mariadb-server
 * php5-fpmldash
 * php5-mysql
 
@@ -133,5 +133,5 @@ ldash ls bu
 * Setup options for system specific configurations
 * Leverage WP-CLI to manage WordPress Sites
 * And some Drupal stuff
-* Support MariaDB, MongoDB
+* Support MongoDB
 
