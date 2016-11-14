@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Nginx - new server block
+# Based on this post: http://clubmate.fi/how-to-make-an-nginx-server-block-manually-or-with-a-shell-script/
+
+# Functions
+. /opt/lempdash/library/functions
+
+# Variables
+nginx_available_vhosts='/etc/nginx/sites-available'
+nginx_enabled_vhosts='/etc/nginx/sites-enabled'
+web_dir='/var/www'
+web_user=$(ls -ld /var/www | awk '{print $3}')
+web_group=$(ls -ld /var/www | awk '{print $4}')
+NGINX_SCHEME='$scheme'
+NGINX_REQUEST_URI='$request_uri'
+
+rc=$?; 
+if [[ $rc != 0 ]]; then 
+    location="nginx install location, $web_dir. Or google it."
+    note_perms $locations
+else
+    # Create nginx config file
+    cat > $nginx_available_vhosts/$1 <<EOF
+server {
+        listen 80;
+        server_name $1 www.$1;
+        return 301 $NGINX_SCHEME://$2$NGINX_REQUEST_URI;      
+}
+EOF
+
+    # Enable site by creating symbolic link
+    ln -s $nginx_available_vhosts/$1 $nginx_enabled_vhosts/$1
+
+    # Restart
+    echo "Do you wish to restart nginx?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) /etc/init.d/nginx restart ; break;;
+            No ) exit;;
+        esac
+    done
+
+    ok "Site Created for $1"
+    
+fi

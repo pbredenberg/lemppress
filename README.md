@@ -126,6 +126,12 @@ ldash ls db
 ldash ls bu
 ```
 
+### rd (Redirect)
+**Redirect one site to another site:**
+```
+ldash rd site OriginalSite.com SiteToPointTo.com
+```
+
 ## Future Stuff
 * Better backup/archiving managment
 * Server error summaries/reporting
