@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+apt-get update
+apt-get install -y vim mysql-server libcurl3 htop git lsof ppa-purge php5-fpm php5-common php5-mysqlnd php5-xmlrpc php5-curl php5-gd php5-imagick php5-cli php-pear php5-dev php5-imap php5-mcrypt

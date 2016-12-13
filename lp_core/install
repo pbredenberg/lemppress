@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+# Check dependencies for mission critical stuff
+type zip >/dev/null 2>&1 || echo "The package 'zip' is not installed on your system, so installing..." && sudo apt-get -y install zip
+
+# Copy all the things into /bin and /opt
+mkdir -p /opt/lempdash/tasks
+cp -R /vagrant/tasks /opt/lempdash
+cp -R /vagrant/library /opt/lempdash
+cp /vagrant/lempdash /bin/ldash
+
+# Make task scripts executlable
+chmod +x /bin/ldash
+find /opt/lempdash/ -type f -exec /bin/sh -c "file {} | grep -q executable && chmod +x {}" \;

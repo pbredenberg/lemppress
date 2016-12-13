@@ -1,1 +1,4 @@
 #!/bin/bash -e
+
+echo "Installing LEMPDash latest..."
+/vagrant/lp_core/install
