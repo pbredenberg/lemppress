@@ -69,4 +69,23 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get update
   #   sudo apt-get install -y apache2
   # SHELL
+  if defined? VagrantPlugins::Triggers
+    config.trigger.after :up, :stdout => true do
+      run "vagrant ssh -c '/vagrant/lp_core/provision/up'"
+    end
+    config.trigger.before :reload, :stdout => true do
+      run "vagrant ssh -c '/vagrant/lp_core/provision/reload'"
+    end
+    # config.trigger.after :reload, :stdout => true do
+    # end
+    config.trigger.before :halt, :stdout => true do
+      run "vagrant ssh -c '/vagrant/lp_core/provision/halt'"
+    end
+    config.trigger.before :suspend, :stdout => true do
+      run "vagrant ssh -c '/vagrant/lp_core/provision/suspend'"
+    end
+    config.trigger.before :destroy, :stdout => true do
+      run "vagrant ssh -c '/vagrant/lp_core/provision/destroy'"
+    end
+  end
 end
